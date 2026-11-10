@@ -136,7 +136,11 @@ html[data-theme="dark"] .seg button.act{background:var(--surface-2)}
 .empty-list{padding:18px 12px;text-align:center;color:var(--muted);font-size:12.5px}
 
 /* ---------- work area ---------- */
-.work{display:grid;grid-template-rows:52px 1fr auto;min-width:0;min-height:0;background:var(--viewer-bg)}
+.work{display:grid;grid-template-rows:52px 1fr auto;min-width:0;min-height:0;background:var(--viewer-bg);position:relative}
+.zoombar{position:absolute;right:16px;top:64px;z-index:40;display:flex;align-items:center;gap:2px;padding:3px;background:var(--surface);border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow-md)}
+.zoombar .ic-btn{border-radius:999px}
+.rel-legend{display:flex;gap:14px;margin-top:4px;flex-wrap:wrap}
+.rel-legend span{display:inline-flex;align-items:center;gap:6px}
 .tb{display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--surface);border-bottom:1px solid var(--border);min-width:0;overflow-x:auto;scrollbar-width:none}
 .tb::-webkit-scrollbar{display:none}
 .tabs{display:flex;gap:2px;height:100%;margin-right:6px}
@@ -195,6 +199,51 @@ html[data-theme="dark"] .seg button.act{background:var(--surface-2)}
 .badge-pill{display:inline-flex;align-items:center;height:20px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:600}
 .badge-pill.ok{background:var(--success-bg);color:var(--success)}
 .badge-pill.wr{background:var(--warn-bg);color:var(--warn)}
+.badge-pill.bad{background:var(--danger-bg);color:var(--danger)}
+.ver{font-size:11px;font-weight:600;padding:1px 6px;border-radius:6px;background:var(--primary-weak);color:var(--primary);margin-left:8px;vertical-align:2px;letter-spacing:0}
+.tab .badge.bad{background:var(--danger-bg);color:var(--danger)}
+/* porušené podmínky v lavicích */
+.seat.bad{background:var(--danger-bg)!important;box-shadow:inset 0 0 0 2px var(--danger);animation:glow 1.6s ease-in-out infinite}
+.seat.bad .nm{color:var(--danger)}
+@keyframes glow{0%,100%{box-shadow:inset 0 0 0 2px var(--danger)}50%{box-shadow:inset 0 0 0 2px var(--danger),inset 0 0 14px rgba(220,38,38,.35)}}
+.st .dot.bad{background:var(--danger);box-shadow:0 0 0 3px var(--danger-bg)}
+/* vztahy */
+.edges{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.edge{cursor:pointer}
+.edge .hitl{stroke:transparent;stroke-width:16;fill:none}
+.edge .halo{fill:none;stroke:var(--danger);stroke-width:12;opacity:.25;animation:halo 1.6s ease-in-out infinite}
+@keyframes halo{0%,100%{opacity:.12}50%{opacity:.38}}
+.edge.sel .vis{filter:drop-shadow(0 0 3px var(--primary))}
+.edge.sel .selr{fill:none;stroke:var(--primary);stroke-width:9;opacity:.25}
+.edge .mid{fill:var(--surface);stroke-width:2}
+.edge .midt{font-size:11px;font-weight:700;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.node{position:absolute;transform:translate(-50%,-50%);height:32px;padding:0 22px 0 12px;border-radius:999px;border:1.5px solid var(--border-strong);background:var(--surface);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;white-space:nowrap;cursor:grab;user-select:none;touch-action:none;box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .15s,background .15s;z-index:2}
+.node:hover{border-color:var(--primary)}
+.node.dragging{cursor:grabbing;box-shadow:var(--shadow-lg);z-index:30;transition:none}
+.node.tgt{border-color:var(--primary);background:var(--primary-weak);box-shadow:0 0 0 4px var(--primary-ring)}
+.node.bad{border-color:var(--danger);background:var(--danger-bg);color:var(--danger);animation:nglow 1.6s ease-in-out infinite}
+@keyframes nglow{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.0)}50%{box-shadow:0 0 0 5px rgba(220,38,38,.22)}}
+.node svg{width:13px;height:13px;fill:none;stroke:var(--primary);stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.node .hd{position:absolute;right:4px;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:var(--surface);border:2px solid var(--faint);cursor:crosshair;transition:border-color .15s,background .15s,transform .15s}
+.node:hover .hd{border-color:var(--primary);transform:scale(1.15)}
+.node .hd::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--faint)}
+.node:hover .hd::after{background:var(--primary)}
+.node.unseated{border-style:dashed}
+.rtypes{display:flex;gap:4px;padding:3px;background:var(--surface-3);border-radius:11px}
+.rtype{height:30px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:7px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s,box-shadow .15s}
+.rtype.act{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm);font-weight:600}
+html[data-theme="dark"] .rtype.act{background:var(--surface-2)}
+.sw{width:22px;height:0;border-top:3.5px solid;border-radius:2px;flex:none}
+.sw.dash{border-top-style:dashed}
+.rel-list{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+.rel-list li{display:flex;align-items:center;gap:8px;font-size:12.5px}
+.rel-list .sw{width:16px}
+.edges{pointer-events:none}
+.edge .hitl{pointer-events:stroke}
+.info.bad{background:var(--danger-bg);border-color:transparent}
+.info.bad svg.i{color:var(--danger)}
+.rel-hint{position:absolute;left:16px;top:12px;font-size:12px;color:var(--muted);pointer-events:none;z-index:1;background:var(--stage-bg);padding:2px 6px;border-radius:6px}
+.rel-empty{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;pointer-events:none}
 
 /* modal */
 .mbg{position:fixed;inset:0;background:rgba(15,23,42,.45);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:grid;place-items:center;z-index:900;padding:16px;animation:fade .15s}
@@ -219,6 +268,8 @@ html[data-theme="dark"] .seg button.act{background:var(--surface-2)}
 .mbar{display:none}
 #printArea{display:none}
 
+@media (max-width:1560px){ .tb .tbc .t{display:none} .tb .tbc{padding:0 8px} }
+@media (max-width:1400px){ .rtype .t{display:none} }
 @media (max-width:1180px){
   .hdr-actions .btn .t{display:none}
   .hdr-actions .btn{padding:0 9px}
@@ -262,7 +313,7 @@ html[data-theme="dark"] .seg button.act{background:var(--surface-2)}
       <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14"/><rect x="3.5" y="9" width="7" height="4" rx="1"/><rect x="13.5" y="9" width="7" height="4" rx="1"/><rect x="3.5" y="16" width="7" height="4" rx="1"/><rect x="13.5" y="16" width="7" height="4" rx="1"/></svg>
     </div>
     <div class="brand">
-      <div class="brand-title">ŠestaApp<span class="sl">/</span><span class="ap">ZASEDAČKA</span></div>
+      <div class="brand-title">ŠestaApp<span class="sl">/</span><span class="ap">ZASEDAČKA</span><span class="ver">2.0</span></div>
       <div class="brand-sub" id="brandSub">Zasedací pořádek třídy</div>
     </div>
     <div class="hdr-actions">
@@ -289,7 +340,7 @@ html[data-theme="dark"] .seg button.act{background:var(--surface-2)}
           <div class="g2">
             <div><label class="lbl" for="fClass">Třída</label><input class="inp" id="fClass" placeholder="např. 7.A" maxlength="30"></div>
             <div><label class="lbl" for="fYear">Školní rok</label><input class="inp" id="fYear" placeholder="2026/2027" maxlength="20"></div>
-            <div class="s2"><label class="lbl" for="fTeacher">Vyučující / třídní učitel</label><input class="inp" id="fTeacher" placeholder="jméno" maxlength="60"></div>
+            <div class="s2"><label class="lbl" for="fNote">Poznámka (vytiskne se)</label><input class="inp" id="fNote" placeholder="např. Varianta A, od 1. 12." maxlength="60"></div>
           </div>
           <div class="g4" id="stats"></div>
         </div>
@@ -310,6 +361,7 @@ html[data-theme="dark"] .seg button.act{background:var(--surface-2)}
             </div>
           </div>
           <div id="eyeInfo"></div>
+          <div id="relInfo"></div>
           <div>
             <div class="row" style="margin-bottom:6px">
               <span class="lbl" style="margin:0">Seznam třídy</span>
@@ -346,6 +398,7 @@ html[data-theme="dark"] .seg button.act{background:var(--surface-2)}
       <div class="tb">
         <div class="tabs" role="tablist">
           <button class="tab" data-mode="desks" role="tab"><svg class="i"><use href="#i-grid"/></svg>Lavice<span class="badge" id="bdDesks">0</span></button>
+          <button class="tab" data-mode="rel" role="tab"><svg class="i"><use href="#i-link"/></svg>Vztahy<span class="badge" id="bdRel">0</span></button>
           <button class="tab" data-mode="students" role="tab"><svg class="i"><use href="#i-users"/></svg>Žáci<span class="badge" id="bdSt">0</span></button>
         </div>
         <div class="tb-group" id="tbDesks">
@@ -354,26 +407,34 @@ html[data-theme="dark"] .seg button.act{background:var(--surface-2)}
           <button class="btn sm" id="bQuick" title="Vygenerovat celé rozložení"><svg class="i"><use href="#i-wand"/></svg><span class="t">Rychlé rozložení</span></button>
           <span class="sep"></span>
           <button class="btn sm" id="bRot" title="Otočit (R)"><svg class="i"><use href="#i-rotate"/></svg><span class="t">Otočit</span></button>
-          <button class="btn sm" id="bType" title="Přepnout lavici pro 1 / pro 2 (T)"><svg class="i"><use href="#i-swap"/></svg><span class="t">1 ↔ 2</span></button>
-          <button class="btn sm" id="bDup" title="Duplikovat (D)"><svg class="i"><use href="#i-copy"/></svg><span class="t">Duplikovat</span></button>
-          <button class="btn sm danger-t" id="bDel" title="Smazat (Delete)"><svg class="i"><use href="#i-trash"/></svg><span class="t">Smazat</span></button>
+          <button class="btn sm tbc" id="bType" title="Přepnout lavici pro 1 / pro 2 (T)"><svg class="i"><use href="#i-swap"/></svg><span class="t">1 ↔ 2</span></button>
+          <button class="btn sm tbc" id="bDup" title="Duplikovat (D)"><svg class="i"><use href="#i-copy"/></svg><span class="t">Duplikovat</span></button>
+          <button class="btn sm tbc danger-t" id="bDel" title="Smazat (Delete)"><svg class="i"><use href="#i-trash"/></svg><span class="t">Smazat</span></button>
+        </div>
+        <div class="tb-group" id="tbRel">
+          <div class="rtypes" id="rTypes"></div>
+          <span class="sep"></span>
+          <button class="btn sm" id="bScatter" title="Znovu rozházet jména po ploše"><svg class="i"><use href="#i-shuffle"/></svg><span class="t">Rozházet</span></button>
+          <button class="btn sm tbc danger-t" id="bDelRel" title="Smazat vybranou spojnici (Delete)"><svg class="i"><use href="#i-trash"/></svg><span class="t">Smazat</span></button>
         </div>
         <div class="tb-group" id="tbStudents">
           <button class="btn sm" id="bRandom" title="Náhodně rozsadit neusazené žáky do volných míst"><svg class="i"><use href="#i-shuffle"/></svg><span class="t">Rozsadit náhodně</span></button>
+          <button class="btn sm" id="bAll" title="Vyprázdnit lavice a znovu náhodně rozsadit všechny žáky podle vztahů"><svg class="i"><use href="#i-rotate"/></svg><span class="t">Zamíchat vše</span></button>
           <button class="btn sm" id="bAlpha" title="Rozsadit neusazené žáky abecedně od tabule"><svg class="i"><use href="#i-sort"/></svg><span class="t">Abecedně</span></button>
           <button class="btn sm" id="bEyeFirst" title="Při automatickém rozsazení dát žáky se zrakovými obtížemi do prvních řad"><svg class="i"><use href="#i-eye"/></svg><span class="t">Zrak dopředu</span></button>
           <span class="sep"></span>
-          <button class="btn sm danger-t" id="bEmpty" title="Vyprázdnit všechny lavice"><svg class="i"><use href="#i-eraser"/></svg><span class="t">Vyprázdnit</span></button>
+          <button class="btn sm tbc danger-t" id="bEmpty" title="Vyprázdnit všechny lavice"><svg class="i"><use href="#i-eraser"/></svg><span class="t">Vyprázdnit</span></button>
         </div>
         <div class="tb-right">
           <button class="ic-btn" id="bUndo" title="Zpět (Ctrl+Z)"><svg class="i"><use href="#i-undo"/></svg></button>
           <button class="ic-btn" id="bRedo" title="Znovu (Ctrl+Y)"><svg class="i"><use href="#i-redo"/></svg></button>
-          <span class="sep"></span>
-          <button class="ic-btn" id="bZo" title="Oddálit"><svg class="i"><use href="#i-minus"/></svg></button>
-          <span class="zoom-lbl" id="zoomLbl">100 %</span>
-          <button class="ic-btn" id="bZi" title="Přiblížit"><svg class="i"><use href="#i-plus"/></svg></button>
-          <button class="ic-btn" id="bFit" title="Přizpůsobit obsahu"><svg class="i"><use href="#i-fit"/></svg></button>
         </div>
+      </div>
+      <div class="zoombar">
+        <button class="ic-btn" id="bZo" title="Oddálit (Ctrl + kolečko)"><svg class="i"><use href="#i-minus"/></svg></button>
+        <span class="zoom-lbl" id="zoomLbl">100 %</span>
+        <button class="ic-btn" id="bZi" title="Přiblížit (Ctrl + kolečko)"><svg class="i"><use href="#i-plus"/></svg></button>
+        <button class="ic-btn" id="bFit" title="Přizpůsobit obsahu"><svg class="i"><use href="#i-fit"/></svg></button>
       </div>
       <div class="vp" id="vp"><div class="stage-wrap" id="wrap"><div class="stage" id="stage"></div></div></div>
       <div class="tray" id="tray"></div>
@@ -422,18 +483,19 @@ html[data-theme="dark"] .seg button.act{background:var(--surface-2)}
     <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
     <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.4 6h9.2M6.3 8.2l4.4 7.6M17.7 8.2l-4.4 7.6"/></symbol>
   </defs>
 </svg>
 
 <script>
 'use strict';
 /* =========================================================
-   ŠestaApp – ZASEDAČKA · v1.0
+   ŠestaApp – ZASEDAČKA · v2.0
    ========================================================= */
 const CELL = 20, GW = 56, GH = 36;
 const DIM = {2:{w:8,h:3}, 1:{w:4,h:3}};
 const BOARD = {w:16,h:2};
-const LS_KEY = 'zasedacka-state-v1';
+const LS_KEY = 'zasedacka-state-v1'; const APP_VERSION = '2.0';
 const EYE_PATH = 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z';
 
 const $ = s => document.querySelector(s);
@@ -447,7 +509,7 @@ const ico = (n, cls='i') => `<svg class="${cls}"><use href="#i-${n}"/></svg>`;
 
 /* ---------- state ---------- */
 let state, hist = [], hIdx = -1;
-let mode = 'desks', sel = null, zoom = 1, importOrder = 'fl';
+let mode = 'desks', sel = null, zoom = 1, importOrder = 'fl', curRel = 'never', selRel = null, relBad = new Set();
 
 function defaultState(){
   const s = blankState();
@@ -455,9 +517,9 @@ function defaultState(){
   return s;
 }
 function blankState(){
-  return {app:'SestaApp-Zasedacka', version:1,
-    meta:{className:'', teacher:'', year:schoolYear()},
-    students:[], desks:[], board:{x:Math.round((GW-BOARD.w)/2), y:2, rot:0},
+  return {app:'SestaApp-Zasedacka', version:2,
+    meta:{className:'', note:'', year:schoolYear()},
+    students:[], desks:[], relations:[], board:{x:Math.round((GW-BOARD.w)/2), y:2, rot:0},
     opts:{orient:'auto', view:'students', printBw:false, eyeFirst:true}};
 }
 function schoolYear(){ const d=new Date(), y=d.getFullYear(); return d.getMonth()>=7 ? `${y}/${y+1}` : `${y-1}/${y}`; }
@@ -465,13 +527,15 @@ function schoolYear(){ const d=new Date(), y=d.getFullYear(); return d.getMonth(
 function normalize(o){
   const s = blankState();
   if(!o || typeof o!=='object') throw new Error('Neplatný soubor');
-  if(o.meta){ for(const k of ['className','teacher','year']) if(typeof o.meta[k]==='string') s.meta[k]=o.meta[k].slice(0,80); }
-  if(Array.isArray(o.students)) s.students = o.students.filter(x=>x && (x.first||x.last)).map(x=>({id:String(x.id||uid()), first:String(x.first||'').trim(), last:String(x.last||'').trim(), eye:!!x.eye}));
+  if(o.meta){ for(const k of ['className','note','year']) if(typeof o.meta[k]==='string') s.meta[k]=o.meta[k].slice(0,80); }
+  if(Array.isArray(o.students)) s.students = o.students.filter(x=>x && (x.first||x.last)).map(x=>{ const r={id:String(x.id||uid()), first:String(x.first||'').trim(), last:String(x.last||'').trim(), eye:!!x.eye}; if(typeof x.gx==='number'&&typeof x.gy==='number'){ r.gx=clamp(x.gx,30,GW*CELL-30); r.gy=clamp(x.gy,20,GH*CELL-20); } return r; });
   const ids = new Set(s.students.map(x=>x.id)), used = new Set();
   if(Array.isArray(o.desks)) s.desks = o.desks.filter(d=>d && (d.type===1||d.type===2)).map(d=>{
     const seats = Array.from({length:d.type}, (_,i)=>{ const v = Array.isArray(d.seats)? d.seats[i] : null; if(v && ids.has(v) && !used.has(v)){ used.add(v); return v; } return null; });
     return {id:String(d.id||uid()), type:d.type, rot:d.rot?1:0, x:clamp(Math.round(+d.x||0),0,GW-1), y:clamp(Math.round(+d.y||0),0,GH-1), seats};
   });
+  if(Array.isArray(o.relations)){ const seen=new Set();
+    s.relations = o.relations.filter(r=>r && ids.has(r.a) && ids.has(r.b) && r.a!==r.b && REL[r.t]).filter(r=>{ const k=pairKey(r.a,r.b); if(seen.has(k)) return false; seen.add(k); return true; }).map(r=>({a:r.a, b:r.b, t:r.t})); }
   if(o.board) s.board = {x:clamp(Math.round(+o.board.x||0),0,GW-1), y:clamp(Math.round(+o.board.y||0),0,GH-1), rot:o.board.rot?1:0};
   if(o.opts){ const p=o.opts;
     if(['auto','land','port'].includes(p.orient)) s.opts.orient=p.orient;
@@ -488,7 +552,7 @@ function commit(opts={}){
 function persist(){ try{ localStorage.setItem(LS_KEY, snapshot()); }catch(e){} }
 function undo(){ if(hIdx<=0) return; hIdx--; state = JSON.parse(hist[hIdx]); fixSel(); persist(); renderAll(); }
 function redo(){ if(hIdx>=hist.length-1) return; hIdx++; state = JSON.parse(hist[hIdx]); fixSel(); persist(); renderAll(); }
-function fixSel(){ if(sel && sel!=='board' && !state.desks.find(d=>d.id===sel)) sel=null; }
+function fixSel(){ if(sel && sel!=='board' && !state.desks.find(d=>d.id===sel)) sel=null; if(selRel && !state.relations.find(r=>pairKey(r.a,r.b)===selRel)) selRel=null; }
 
 /* ---------- geometry ---------- */
 function rectOf(id){
@@ -579,12 +643,16 @@ const stage = $('#stage'), wrap = $('#wrap'), vp = $('#vp');
 function renderAll(o={}){
   document.body.classList.toggle('mode-desks', mode==='desks');
   document.body.classList.toggle('mode-students', mode==='students');
+  document.body.classList.toggle('mode-rel', mode==='rel');
   renderStage(); renderTray(); renderSide(); renderToolbar();
   if(o.fit) fitContent();
 }
 function renderStage(){
   stage.style.width = GW*CELL+'px'; stage.style.height = GH*CELL+'px';
+  if(mode==='rel'){ renderRel(); return; }
   const lab = labels(), rows = deskRows(), byId = Object.fromEntries(state.students.map(s=>[s.id,s]));
+  const bad = evalRelations(), why = {};
+  for(const r of bad){ (why[r.a]=why[r.a]||[]).push(`${REL[r.t].short} s ${lab[r.b]}`); (why[r.b]=why[r.b]||[]).push(`${REL[r.t].short} s ${lab[r.a]}`); }
   let h='';
   const b = rectOf('board');
   h += `<div class="item board${state.board.rot?' vert':''}${sel==='board'?' sel':''}" data-id="board" style="left:${b.x*CELL}px;top:${b.y*CELL}px;width:${b.w*CELL}px;height:${b.h*CELL}px"><span>TABULE</span></div>`;
@@ -595,7 +663,7 @@ function renderStage(){
       const st = sid && byId[sid];
       if(st){
         const far = st.eye && rows[d.id]>2;
-        h += `<div class="seat occ" data-desk="${d.id}" data-idx="${i}" data-sid="${sid}" title="${esc(fullName(st))}${st.eye?' · zrakové obtíže'+(far?' – sedí v '+rows[d.id]+'. řadě':''):''}"><span class="nm">${esc(lab[sid])}</span>${st.eye?`<span class="eyeb${far?' far':''}">${eyeSvg}</span>`:''}</div>`;
+        h += `<div class="seat occ${why[sid]?' bad':''}" data-desk="${d.id}" data-idx="${i}" data-sid="${sid}" title="${esc(fullName(st))}${st.eye?' · zrakové obtíže'+(far?' – sedí v '+rows[d.id]+'. řadě':''):''}${why[sid]?' · NESPLNĚNO: '+esc(why[sid].join(', ')):''}"><span class="nm">${esc(lab[sid])}</span>${st.eye?`<span class="eyeb${far?' far':''}">${eyeSvg}</span>`:''}</div>`;
       } else h += `<div class="seat" data-desk="${d.id}" data-idx="${i}"><span class="plus">${ico('plus','i')}</span></div>`;
     });
     h += `</div>`;
@@ -622,7 +690,7 @@ function renderTray(){
 }
 function renderSide(){
   const m = state.meta;
-  for(const [id,k] of [['#fClass','className'],['#fYear','year'],['#fTeacher','teacher']]){ const el=$(id); if(document.activeElement!==el) el.value=m[k]; }
+  for(const [id,k] of [['#fClass','className'],['#fYear','year'],['#fNote','note']]){ const el=$(id); if(document.activeElement!==el) el.value=m[k]; }
   $('#brandSub').textContent = 'Zasedací pořádek' + (m.className ? ' · třída '+m.className : ' třídy');
   $('#mClass').textContent = m.className || '';
   const seats = state.desks.reduce((a,d)=>a+d.type,0);
@@ -638,13 +706,22 @@ function renderSide(){
   $('#bdDesks').textContent = state.desks.length;
   $('#bdSt').textContent = `${seated}/${n}`;
   $('#mTot').textContent = `${seated}/${n}`;
-  const lab = labels(), rows = deskRows();
+  const lab = labels(), rows = deskRows(), bad = evalRelations(), badS = new Set(bad.flatMap(r=>[r.a,r.b]));
+  $('#bdRel').textContent = state.relations.length + (bad.length ? ' · '+bad.length+'✕' : '');
+  $('#bdRel').classList.toggle('bad', bad.length>0);
+  let ri='';
+  if(state.relations.length){
+    ri = bad.length
+      ? `<div class="info bad">${ico('alert')}<div>Nesplněné vztahy: <b>${bad.length}</b> z ${state.relations.length}<ul class="rel-list">${bad.map(r=>`<li><span class="sw${REL[r.t].dash?' dash':''}" style="border-color:${relColor(r.t)}"></span>${esc(lab[r.a])} × ${esc(lab[r.b])} – ${REL[r.t].short}</li>`).join('')}</ul></div></div>`
+      : `<div class="info">${ico('link')}<div>Vztahy: <b>${state.relations.length}</b> · u usazených žáků jsou všechny splněné.</div></div>`;
+  }
+  $('#relInfo').innerHTML = ri;
   const list = $('#stList');
   if(!n) list.innerHTML = `<div class="empty-list">Zatím žádní žáci. Vložte seznam jmen výše.</div>`;
   else list.innerHTML = state.students.map((s,i)=>{
     const so = seatOf(s.id), far = s.eye && so && rows[so.desk.id]>2;
     const short = (lab[s.id] !== s.first && lab[s.id] !== fullName(s)) ? `<small>${esc(lab[s.id])}</small>` : '';
-    return `<div class="st" data-sid="${s.id}"><span class="no">${i+1}</span><span class="dot${so?' on':''}" title="${so?'sedí':'nesedí'}"></span><span class="nm" title="${esc(fullName(s))}">${esc(fullName(s))}${short}</span>`+
+    return `<div class="st" data-sid="${s.id}"><span class="no">${i+1}</span><span class="dot${badS.has(s.id)?' bad':(so?' on':'')}" title="${badS.has(s.id)?'nesplněný vztah':(so?'sedí':'nesedí')}"></span><span class="nm" title="${esc(fullName(s))}">${esc(fullName(s))}${short}</span>`+
       `<button class="ic-btn eye${s.eye?' on':''}${far?' far':''}" data-act="eye" title="${s.eye?'Zrakové obtíže (kliknutím zrušíte)':'Označit zrakové obtíže'}">${ico('eye')}</button>`+
       `<button class="ic-btn" data-act="del" title="Odebrat žáka">${ico('x')}</button></div>`;
   }).join('');
@@ -666,6 +743,9 @@ function renderToolbar(){
   $$('.tab').forEach(t=>t.classList.toggle('act', t.dataset.mode===mode));
   $('#tbDesks').style.display = mode==='desks' ? '' : 'none';
   $('#tbStudents').style.display = mode==='students' ? '' : 'none';
+  $('#tbRel').style.display = mode==='rel' ? '' : 'none';
+  $('#rTypes').innerHTML = Object.entries(REL).map(([k,r])=>`<button class="rtype${curRel===k?' act':''}" data-v="${k}" title="${esc(r.desc)}"><span class="sw${r.dash?' dash':''}" style="border-color:${relColor(k)}"></span><span class="t">${r.name}</span></button>`).join('');
+  $('#bDelRel').disabled = !selRel;
   const isDesk = sel && sel!=='board';
   $('#bRot').disabled = !sel; $('#bType').disabled = !isDesk; $('#bDup').disabled = !isDesk; $('#bDel').disabled = !isDesk;
   $('#bEyeFirst').classList.toggle('on', state.opts.eyeFirst);
@@ -694,6 +774,14 @@ function stagePt(e){ const r = stage.getBoundingClientRect(); return {x:(e.clien
 stage.addEventListener('pointerdown', e=>{
   if(e.button>0) return;
   const seat = e.target.closest('.seat');
+  if(mode==='rel'){
+    const node = e.target.closest('.node'), edge = e.target.closest('.edge');
+    if(node && e.target.closest('.hd')){ e.preventDefault(); startLink(e, node.dataset.sid); return; }
+    if(node){ e.preventDefault(); startNodeMove(e, node); return; }
+    if(edge){ selRel = edge.dataset.k; const r = state.relations.find(x=>pairKey(x.a,x.b)===selRel); if(r) curRel = r.t; drawEdges(); renderToolbar(); return; }
+    if(selRel){ selRel=null; drawEdges(); renderToolbar(); }
+    return;
+  }
   if(mode==='students'){
     if(seat && seat.dataset.sid) startStudentDrag(e, seat.dataset.sid, {deskId:seat.dataset.desk, idx:+seat.dataset.idx});
     return;
@@ -787,6 +875,183 @@ $('#stList').addEventListener('pointerdown', e=>{
   startStudentDrag(e, r.dataset.sid, so ? {deskId:so.desk.id, idx:so.idx} : null);
 });
 
+/* =========================================================
+   VZTAHY – podmínky mezi žáky
+   ========================================================= */
+const REL = {
+  never:   {name:'Nikdy blízko', short:'nesmí sedět blízko', desc:'Tmavě červená – nesmí sedět spolu, vedle sebe, za sebou ani přes roh', color:'#991B1B', dark:'#EF4444', dash:false},
+  apart:   {name:'Ne v lavici',  short:'nesmí sedět v jedné lavici', desc:'Světle červená – nesmí sedět v jedné lavici, jinak mohou být blízko', color:'#F87171', dark:'#FCA5A5', dash:true},
+  near:    {name:'Blízko',       short:'musí sedět blízko', desc:'Světle zelená – musí sedět spolu, přes uličku nebo přes roh', color:'#4ADE80', dark:'#86EFAC', dash:true},
+  together:{name:'Spolu',        short:'musí sedět spolu', desc:'Zelená – musí sedět spolu v jedné lavici', color:'#15803D', dark:'#22C55E', dash:false},
+};
+const pairKey = (a,b) => a<b ? a+'|'+b : b+'|'+a;
+const relColor = t => document.documentElement.getAttribute('data-theme')==='dark' ? REL[t].dark : REL[t].color;
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+/* sousedství míst: same = stejná lavice, side = vedle v řadě (přes uličku / sousední lavice),
+   behind = přes lavici (před / za), corner = přes roh */
+function seatGeo(){
+  const rows = deskRows(), vert = !!state.board.rot, list = [];
+  for(const d of state.desks) seatRects(d).forEach((r,i)=>list.push({key:d.id+':'+i, desk:d.id, idx:i, row:rows[d.id], l0:vert?r.y:r.x, l1:vert?r.y+r.h:r.x+r.w}));
+  const n = list.length, M = Array.from({length:n}, ()=>Array(n).fill(null));
+  const ov = (a,b) => Math.min(a.l1,b.l1)-Math.max(a.l0,b.l0);
+  for(let i=0;i<n;i++){
+    const a = list[i]; let L=null, Lg=Infinity, R=null, Rg=Infinity;
+    for(let j=0;j<n;j++){ if(i===j) continue; const b = list[j];
+      if(b.desk===a.desk) M[i][j]='same';
+      if(b.row!==a.row) continue;
+      if(b.l0>=a.l1-0.01){ const g=b.l0-a.l1; if(g<Rg){ Rg=g; R=j; } }
+      else if(b.l1<=a.l0+0.01){ const g=a.l0-b.l1; if(g<Lg){ Lg=g; L=j; } }
+    }
+    for(const [k,g] of [[L,Lg],[R,Rg]]) if(k!==null && g<=6 && list[k].desk!==a.desk){ M[i][k]='side'; M[k][i]='side'; }
+  }
+  for(let i=0;i<n;i++) for(let j=0;j<n;j++){
+    if(i===j || M[i][j]) continue; const a=list[i], b=list[j];
+    if(Math.abs(a.row-b.row)!==1) continue;
+    if(ov(a,b) >= 0.5*Math.min(a.l1-a.l0, b.l1-b.l0)) M[i][j]='behind';
+  }
+  for(let i=0;i<n;i++) for(let c=0;c<n;c++){
+    if(M[i][c]!=='behind') continue;
+    for(let b=0;b<n;b++){
+      if(b===i || b===c || M[i][b]) continue; const m = M[c][b];
+      if((m==='same'||m==='side') && list[b].row===list[c].row && ov(list[c],list[b])<=0.01){ M[i][b]='corner'; M[b][i]='corner'; }
+    }
+  }
+  return {list, M, index:Object.fromEntries(list.map((x,i)=>[x.key,i]))};
+}
+function relOk(t, m){
+  if(t==='never') return !m;
+  if(t==='apart') return m!=='same';
+  if(t==='near') return m==='same' || m==='side' || m==='corner';
+  if(t==='together') return m==='same';
+  return true;
+}
+function evalRelations(g){
+  if(!state.relations.length) return [];
+  g = g || seatGeo();
+  const pos = {};
+  state.desks.forEach(d=>d.seats.forEach((sid,i)=>{ if(sid) pos[sid]=g.index[d.id+':'+i]; }));
+  return state.relations.filter(r=>{ const a=pos[r.a], b=pos[r.b]; return a!==undefined && b!==undefined && !relOk(r.t, g.M[a][b]); });
+}
+
+/* rozmístění jmen na ploše vztahů */
+function scatter(){
+  const n = state.students.length; if(!n) return;
+  const W = GW*CELL, H = GH*CELL, cols = Math.max(1, Math.ceil(Math.sqrt(n*1.9))), rows = Math.ceil(n/cols);
+  const cw = (W-180)/cols, ch = Math.min(96, (H-120)/rows), y0 = (H-ch*rows)/2 + 10;
+  shuffle([...state.students]).forEach((s,k)=>{
+    const c = k%cols, r = Math.floor(k/cols);
+    s.gx = Math.round(90 + c*cw + cw/2 + (Math.random()-.5)*cw*.22);
+    s.gy = Math.round(y0 + r*ch + ch/2 + (Math.random()-.5)*ch*.45);
+  });
+}
+function findNodeSpot(){
+  const W = GW*CELL, H = GH*CELL;
+  for(let y=60; y<H-30; y+=44) for(let x=90; x<W-80; x+=30)
+    if(state.students.every(s=>typeof s.gx!=='number' || Math.abs(s.gx-x)>140 || Math.abs(s.gy-y)>44)) return {x, y};
+  return {x:W/2 + (Math.random()-.5)*200, y:H/2 + (Math.random()-.5)*200};
+}
+function ensureNodePos(){
+  const miss = state.students.filter(s=>typeof s.gx!=='number');
+  if(!miss.length) return false;
+  if(miss.length===state.students.length) scatter();
+  else for(const s of miss){ const p=findNodeSpot(); s.gx=p.x; s.gy=p.y; }
+  return true;
+}
+function renderRel(){
+  if(ensureNodePos()){ persist(); if(hist[hIdx]) hist[hIdx]=snapshot(); }
+  const lab = labels(), bad = evalRelations();
+  relBad = new Set(bad.map(r=>pairKey(r.a,r.b)));
+  const badS = new Set(bad.flatMap(r=>[r.a,r.b]));
+  const seated = new Set(state.desks.flatMap(d=>d.seats).filter(Boolean));
+  let h = `<svg class="edges" id="edges"></svg>`;
+  if(!state.students.length) h += `<div class="rel-empty">Nejdřív přidejte žáky v levém panelu.</div>`;
+  else h += `<div class="rel-hint">Spojnici vytvoříte tažením z kroužku u jména na jiné jméno · typ vyberete nahoře · kliknutím spojnici vyberete<div class="rel-legend">${Object.entries(REL).map(([k,r])=>`<span><i class="sw${r.dash?' dash':''}" style="border-color:${relColor(k)}"></i>${r.name} – ${r.desc.split(' – ')[1]}</span>`).join('')}</div></div>`;
+  for(const s of state.students){
+    h += `<div class="node${badS.has(s.id)?' bad':''}${seated.has(s.id)?'':' unseated'}" data-sid="${s.id}" style="left:${s.gx}px;top:${s.gy}px" title="${esc(fullName(s))}${seated.has(s.id)?'':' · zatím nesedí'}">${s.eye?eyeSvg:''}<span>${esc(lab[s.id])}</span><span class="hd" title="Táhněte na jiné jméno"></span></div>`;
+  }
+  stage.innerHTML = h; drawEdges(); setZoom(zoom, true);
+}
+function drawEdges(temp){
+  const svg = document.getElementById('edges'); if(!svg) return;
+  const byId = Object.fromEntries(state.students.map(s=>[s.id,s]));
+  const L = (a,b,cls,extra='') => `<line class="${cls}" x1="${a.gx}" y1="${a.gy}" x2="${b.gx}" y2="${b.gy}" ${extra}/>`;
+  let h = '';
+  for(const r of state.relations){
+    const a = byId[r.a], b = byId[r.b]; if(!a||!b) continue;
+    const k = pairKey(r.a,r.b), bad = relBad.has(k), col = relColor(r.t), mx=(a.gx+b.gx)/2, my=(a.gy+b.gy)/2;
+    h += `<g class="edge${selRel===k?' sel':''}" data-k="${k}">`
+      + (selRel===k ? L(a,b,'selr','stroke-linecap="round"') : '')
+      + (bad ? L(a,b,'halo','stroke-linecap="round"') : '')
+      + L(a,b,'vis',`stroke="${col}" stroke-width="3.5" stroke-linecap="round" fill="none" ${REL[r.t].dash?'stroke-dasharray="9 6"':''}`)
+      + L(a,b,'hitl')
+      + (bad ? `<circle class="mid" cx="${mx}" cy="${my}" r="9" stroke="var(--danger)"/><text class="midt" x="${mx}" y="${my+.5}" fill="var(--danger)">!</text>` : '')
+      + `</g>`;
+  }
+  if(temp){
+    const col = relColor(curRel);
+    h += `<line x1="${temp.x1}" y1="${temp.y1}" x2="${temp.x2}" y2="${temp.y2}" stroke="${col}" stroke-width="3.5" stroke-linecap="round" ${REL[curRel].dash?'stroke-dasharray="9 6"':''} opacity=".95"/><circle cx="${temp.x2}" cy="${temp.y2}" r="${temp.snap?7:5}" fill="${col}"/>`;
+  }
+  svg.innerHTML = h;
+}
+function startNodeMove(e, el){
+  const s = state.students.find(x=>x.id===el.dataset.sid), p = stagePt(e);
+  drag = {kind:'node', s, el, offX:p.x-s.gx, offY:p.y-s.gy, sx:e.clientX, sy:e.clientY, moved:false};
+  window.addEventListener('pointermove', onNodeMove); window.addEventListener('pointerup', onNodeUp, {once:true});
+}
+function onNodeMove(e){
+  if(!drag || drag.kind!=='node') return;
+  if(!drag.moved){ if(Math.hypot(e.clientX-drag.sx, e.clientY-drag.sy)<3) return; drag.moved=true; drag.el.classList.add('dragging'); }
+  const p = stagePt(e);
+  drag.s.gx = Math.round(clamp(p.x-drag.offX, 40, GW*CELL-40)); drag.s.gy = Math.round(clamp(p.y-drag.offY, 20, GH*CELL-20));
+  drag.el.style.left = drag.s.gx+'px'; drag.el.style.top = drag.s.gy+'px'; drawEdges();
+}
+function onNodeUp(){
+  window.removeEventListener('pointermove', onNodeMove);
+  const d = drag; drag = null; if(!d) return; d.el.classList.remove('dragging'); if(d.moved) commit();
+}
+function startLink(e, sid){
+  drag = {kind:'link', a:sid, target:null};
+  window.addEventListener('pointermove', onLinkMove); window.addEventListener('pointerup', onLinkUp, {once:true});
+  onLinkMove(e);
+}
+function onLinkMove(e){
+  if(!drag || drag.kind!=='link') return;
+  e.preventDefault && e.preventDefault();
+  const p = stagePt(e), a = state.students.find(x=>x.id===drag.a);
+  let t = null; const el = document.elementFromPoint(e.clientX, e.clientY), n = el && el.closest('.node');
+  if(n && n.dataset.sid!==drag.a) t = n.dataset.sid;
+  else { let bd = 70; for(const s of state.students){ if(s.id===drag.a) continue; const d = Math.hypot(s.gx-p.x, s.gy-p.y); if(d<bd){ bd=d; t=s.id; } } }
+  if(t!==drag.target){
+    stage.querySelectorAll('.node.tgt').forEach(x=>x.classList.remove('tgt'));
+    if(t){ const ne = stage.querySelector(`.node[data-sid="${t}"]`); ne && ne.classList.add('tgt'); }
+    drag.target = t;
+  }
+  const tg = t && state.students.find(x=>x.id===t);
+  drawEdges({x1:a.gx, y1:a.gy, x2:tg?tg.gx:p.x, y2:tg?tg.gy:p.y, snap:!!tg});
+}
+function onLinkUp(){
+  window.removeEventListener('pointermove', onLinkMove);
+  const d = drag; drag = null; if(!d) return;
+  stage.querySelectorAll('.node.tgt').forEach(x=>x.classList.remove('tgt'));
+  if(d.target) setRelation(d.a, d.target, curRel); else drawEdges();
+}
+function setRelation(a, b, t){
+  const k = pairKey(a,b), lab = labels(), ex = state.relations.find(r=>pairKey(r.a,r.b)===k);
+  if(ex){ if(ex.t===t){ drawEdges(); toast('Tato spojnice už existuje'); return; } ex.t=t; toast(`Vztah změněn: ${REL[t].name}`); }
+  else state.relations.push({a, b, t});
+  selRel = null;
+  if(t==='together') for(const x of [a,b]){
+    const deg = state.relations.filter(r=>r.t==='together' && (r.a===x||r.b===x)).length;
+    if(deg>1) toast(`${lab[x]} má „Spolu“ s ${deg} žáky – v lavici jsou jen dvě místa`, 'err');
+  }
+  commit();
+}
+function delRel(){
+  if(!selRel) return;
+  state.relations = state.relations.filter(r=>pairKey(r.a,r.b)!==selRel); selRel=null; commit();
+}
+
 /* ---------- desk actions ---------- */
 function addDesk(type){
   const b = DIM[type];
@@ -840,29 +1105,89 @@ function moveSel(dx,dy){
   const o = sel==='board' ? state.board : state.desks.find(d=>d.id===sel); o.x=n.x; o.y=n.y; commit();
 }
 
-/* ---------- auto seating ---------- */
-function autoSeat(kind){
-  const rows = deskRows(), vert = !!state.board.rot;
-  const free = [];
-  for(const d of state.desks) seatRects(d).forEach((r,i)=>{ if(!d.seats[i]) free.push({d,i,row:rows[d.id], lat: vert ? r.y : r.x}); });
-  free.sort((a,b)=>a.row-b.row || a.lat-b.lat);
-  let list = state.students.filter(s=>!seatOf(s.id));
-  if(!list.length){ toast('Všichni žáci už sedí'); return; }
-  if(!free.length){ toast('Žádné volné místo','err'); return; }
-  if(kind==='random'){ for(let i=list.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [list[i],list[j]]=[list[j],list[i]]; } }
-  else list.sort((a,b)=>coll.compare(a.last,b.last)||coll.compare(a.first,b.first));
-  if(state.opts.eyeFirst) list = [...list.filter(s=>s.eye), ...list.filter(s=>!s.eye)];
-  let seats = free;
-  if(kind==='random' && !state.opts.eyeFirst){ seats = [...free]; for(let i=seats.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [seats[i],seats[j]]=[seats[j],seats[i]]; } }
-  else if(kind==='random'){ // zrakově postižení dopředu, ostatní náhodně ve zbytku
-    const nEye = list.filter(s=>s.eye).length, front = free.slice(0,nEye), rest = free.slice(nEye);
-    for(let i=rest.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [rest[i],rest[j]]=[rest[j],rest[i]]; }
-    seats = [...front, ...rest];
-  }
-  const n = Math.min(list.length, seats.length);
-  for(let k=0;k<n;k++) seats[k].d.seats[seats[k].i] = list[k].id;
+/* ---------- auto seating (s ohledem na vztahy) ---------- */
+function solveSeating(g, S, fixed, seatOrder, rank, eyeHard){
+  const n = g.list.length, M = g.M;
+  const assign = new Map(fixed), used = new Set(fixed.values());
+  const inS = new Set(S.map(s=>s.id)), eyeOf = Object.fromEntries(state.students.map(s=>[s.id, s.eye]));
+  const rels = new Map(), add = (x,o,t) => { if(!rels.has(x)) rels.set(x,[]); rels.get(x).push({o,t}); };
+  for(const r of state.relations){ add(r.a, r.b, r.t); add(r.b, r.a, r.t); }
+  const relevant = sid => (rels.get(sid)||[]).some(r=>inS.has(r.o) || assign.has(r.o));
+  const vars = S.filter(s=>relevant(s.id) || (eyeHard && s.eye)).map(s=>s.id);
+  const varSet = new Set(vars), rest = S.filter(s=>!varSet.has(s.id)).map(s=>s.id);
+  if(vars.length > seatOrder.length) return {ok:false, reason:'space'};
+  const consistent = (sid, i) => {
+    if(eyeHard && eyeOf[sid] && g.list[i].row>2) return false;
+    for(const r of rels.get(sid)||[]){
+      const oi = assign.get(r.o);
+      if(oi!==undefined){ if(!relOk(r.t, M[i][oi])) return false; }
+      else if(inS.has(r.o) && (r.t==='together' || r.t==='near')){
+        let f = false; for(let j=0;j<n;j++) if(j!==i && !used.has(j) && relOk(r.t, M[i][j])){ f=true; break; }
+        if(!f) return false;
+      }
+    }
+    return true;
+  };
+  const un = new Set(vars); let nodes = 0; const t0 = performance.now();
+  const dfs = () => {
+    if(!un.size) return true;
+    if(++nodes>60000 || performance.now()-t0>3000) throw new Error('limit');
+    let best = null, bd = null;
+    for(const sid of un){
+      const dom = []; for(const i of seatOrder) if(!used.has(i) && consistent(sid,i)) dom.push(i);
+      if(!dom.length) return false;
+      if(!best || dom.length<bd.length || (dom.length===bd.length && rank.get(sid)<rank.get(best))){ best=sid; bd=dom; }
+    }
+    un.delete(best);
+    for(const i of bd){ assign.set(best,i); used.add(i); if(dfs()) return true; assign.delete(best); used.delete(i); }
+    un.add(best); return false;
+  };
+  let ok; try{ ok = dfs(); }catch(e){ return {ok:false, reason:'limit'}; }
+  if(!ok) return {ok:false, reason:'conflict'};
+  for(const sid of rest){ const i = seatOrder.find(x=>!used.has(x)); if(i===undefined) break; assign.set(sid,i); used.add(i); }
+  return {ok:true, assign};
+}
+function autoSeat(kind, all){
+  const g = seatGeo(), n = g.list.length;
+  if(!n){ toast('Ve třídě nejsou žádné lavice', 'err'); return; }
+  if(!state.students.length){ toast('Nejdřív přidejte žáky', 'err'); return; }
+  const fixed = new Map();
+  if(!all) state.desks.forEach(d=>d.seats.forEach((sid,i)=>{ if(sid) fixed.set(sid, g.index[d.id+':'+i]); }));
+  const S = state.students.filter(s=>!fixed.has(s.id));
+  if(!S.length){ toast('Všichni žáci už sedí – pro nové rozsazení použijte „Zamíchat vše“'); return; }
+  const taken = new Set(fixed.values());
+  let seatOrder = [...Array(n).keys()].filter(i=>!taken.has(i));
+  if(!seatOrder.length){ toast('Žádné volné místo', 'err'); return; }
+  seatOrder.sort((x,y)=>g.list[x].row-g.list[y].row || g.list[x].l0-g.list[y].l0);
+  if(kind==='random'){ shuffle(S); shuffle(seatOrder); }
+  else S.sort((a,b)=>coll.compare(a.last,b.last)||coll.compare(a.first,b.first));
+  const rank = new Map(S.map((s,i)=>[s.id,i]));
+  const eyeWanted = state.opts.eyeFirst && S.some(s=>s.eye);
+  let res = solveSeating(g, S, fixed, seatOrder, rank, eyeWanted), eyeDropped = false;
+  if(!res.ok && eyeWanted){ const r2 = solveSeating(g, S, fixed, seatOrder, rank, false); if(r2.ok){ res = r2; eyeDropped = true; } }
+  if(!res.ok){ showImpossible(res, all, fixed.size); return; }
+  if(all) state.desks.forEach(d=>d.seats = d.seats.map(()=>null));
+  let placed = 0;
+  for(const [sid,i] of res.assign){ if(fixed.has(sid)) continue; const x = g.list[i]; const d = state.desks.find(q=>q.id===x.desk); d.seats[x.idx] = sid; placed++; }
   commit();
-  if(list.length>seats.length) toast(`Usazeno ${n} žáků – chybí ${list.length-seats.length} míst`, 'err'); else toast(`Usazeno ${n} žáků`, 'ok');
+  const missing = S.length - placed;
+  if(missing>0) toast(`Usazeno ${placed} žáků – chybí ${missing} míst`, 'err');
+  else toast(`Usazeno ${placed} žáků${state.relations.length?' · vztahy splněny':''}`, 'ok');
+  if(eyeDropped) setTimeout(()=>toast('Kvůli vztahům nejde všechny žáky se zrakovými obtížemi posadit do 1.–2. řady', 'err'), 400);
+}
+function showImpossible(res, all, fixedCount){
+  const lab = labels(), tips = [];
+  const deg = {}; state.relations.filter(r=>r.t==='together').forEach(r=>{ deg[r.a]=(deg[r.a]||0)+1; deg[r.b]=(deg[r.b]||0)+1; });
+  for(const [sid,c] of Object.entries(deg)) if(c>1) tips.push(`${lab[sid]} má podmínku „Spolu“ s ${c} žáky, v lavici jsou ale jen dvě místa.`);
+  const pairs = state.relations.filter(r=>r.t==='together').length, doubles = state.desks.filter(d=>d.type===2).length;
+  if(pairs>doubles) tips.push(`Dvojic „Spolu“ je ${pairs}, dvojlavic jen ${doubles}.`);
+  if(res.reason==='space') tips.push('Žáků s podmínkami je víc než volných míst.');
+  if(res.reason==='limit') tips.push('Výpočet trval příliš dlouho – podmínek je pravděpodobně příliš mnoho najednou.');
+  if(!all && fixedCount) tips.push('Část žáků už sedí a jejich místa se nemění – zkuste „Zamíchat vše“.');
+  if(!tips.length) tips.push('Podmínky si navzájem odporují nebo na ně v tomto rozložení lavic není místo. Uvolněte některou spojnici, přidejte lavice nebo upravte uličky.');
+  modal({title:'Rozsazení nelze provést', ok:'Upravit vztahy', cancel:'Zavřít',
+    body:`<div class="info bad">${ico('alert')}<div><b>Za stávajících podmínek rozsazení nelze provést.</b><ul>${tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div></div>`,
+    onOk:()=>{ mode='rel'; sel=null; renderAll(); }});
 }
 
 /* ---------- students actions ---------- */
@@ -871,13 +1196,13 @@ function addStudents(){
   let n=0;
   for(const l of lines){ const p = parseName(l, importOrder); if(p){ state.students.push({id:uid(), ...p, eye:false}); n++; } }
   if(!n){ toast('Vložte alespoň jedno jméno', 'err'); $('#fImport').focus(); return; }
-  $('#fImport').value=''; commit(); toast(`Přidáno ${n} ${n===1?'žák':(n<5?'žáci':'žáků')}`, 'ok');
+  $('#fImport').value=''; ensureNodePos(); commit(); toast(`Přidáno ${n} ${n===1?'žák':(n<5?'žáci':'žáků')}`, 'ok');
 }
 $('#stList').addEventListener('click', e=>{
   const b = e.target.closest('button'); if(!b) return;
   const sid = b.closest('.st').dataset.sid, s = state.students.find(x=>x.id===sid);
   if(b.dataset.act==='eye'){ s.eye=!s.eye; commit(); }
-  if(b.dataset.act==='del'){ const so=seatOf(sid); if(so) so.desk.seats[so.idx]=null; state.students=state.students.filter(x=>x.id!==sid); commit(); toast(`${fullName(s)} odebrán(a) – Ctrl+Z vrátí`); }
+  if(b.dataset.act==='del'){ const so=seatOf(sid); if(so) so.desk.seats[so.idx]=null; state.students=state.students.filter(x=>x.id!==sid); state.relations=state.relations.filter(r=>r.a!==sid&&r.b!==sid); commit(); toast(`${fullName(s)} odebrán(a) – Ctrl+Z vrátí`); }
 });
 $('#stList').addEventListener('dblclick', e=>{
   const nm = e.target.closest('.st .nm'); if(!nm) return;
@@ -896,7 +1221,7 @@ $('#stList').addEventListener('dblclick', e=>{
 function toast(msg, kind=''){
   const t = document.createElement('div'); t.className='toast '+kind;
   t.innerHTML = ico(kind==='err'?'alert':kind==='ok'?'check':'info')+`<span>${esc(msg)}</span>`;
-  $('#toasts').appendChild(t); setTimeout(()=>{ t.style.transition='opacity .2s'; t.style.opacity='0'; setTimeout(()=>t.remove(),220); }, 2800);
+  const box=$('#toasts'); box.appendChild(t); while(box.children.length>4) box.firstElementChild.remove(); setTimeout(()=>{ t.style.transition='opacity .2s'; t.style.opacity='0'; setTimeout(()=>t.remove(),220); }, 2800);
 }
 function modal({title, body, ok='Potvrdit', cancel='Zrušit', danger=false, onOk, onOpen}){
   const bg = document.createElement('div'); bg.className='mbg';
@@ -943,7 +1268,7 @@ function quickLayout(){
 }
 
 /* ---------- file ---------- */
-function slug(){ return (state.meta.className||'trida').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\w]+/g,'-').replace(/^-|-$/g,'').toLowerCase() || 'trida'; }
+function slug(){ return ((state.meta.className+' '+(state.meta.note||'')).trim()||'trida').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\w]+/g,'-').replace(/^-|-$/g,'').toLowerCase() || 'trida'; }
 function download(blob, name){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 4000); }
 function saveFile(){
   const o = {...state, savedAt:new Date().toISOString()};
@@ -982,7 +1307,8 @@ async function renderSheet(bw){
   let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
   for(const it of items){ minX=Math.min(minX,it.r.x); minY=Math.min(minY,it.r.y); maxX=Math.max(maxX,it.r.x+it.r.w); maxY=Math.max(maxY,it.r.y+it.r.h); }
   const bbW = maxX-minX, bbH = maxY-minY;
-  const M=34, HEAD=64, FOOT=30;
+  const m = state.meta, hasHead = !!(m.className||m.year||m.note);
+  const M=34, HEAD = hasHead ? (m.note?60:46) : 4, FOOT=0;
   const pages = {land:[841.89,595.28], port:[595.28,841.89]};
   const scaleFor = k => { const [pw,ph]=pages[k]; return Math.min((pw-2*M)/bbW, (ph-2*M-HEAD-FOOT)/bbH); };
   const orient = state.opts.orient==='auto' ? (scaleFor('land')>=scaleFor('port')?'land':'port') : state.opts.orient;
@@ -995,18 +1321,15 @@ async function renderSheet(bw){
   ctx.fillStyle='#fff'; ctx.fillRect(0,0,PW,PH);
   // záhlaví
   if(!bw){ ctx.fillStyle=C.accent; ctx.fillRect(0,0,PW,5); ctx.fillStyle='#2563EB'; ctx.fillRect(0,5,PW,1.2); }
-  const m = state.meta;
-  ctx.textBaseline='alphabetic'; ctx.fillStyle=C.head; ctx.font=`700 20px ${FONT}`;
-  const title = 'Zasedací pořádek' + (m.className?' – '+m.className:'');
-  ctx.fillText(title, M, M+18);
-  ctx.font=`500 10px ${FONT}`; ctx.fillStyle=C.mut;
-  const sub = [m.teacher?'Vyučující: '+m.teacher:'', m.year?'Školní rok '+m.year:''].filter(Boolean).join('  ·  ');
-  if(sub) ctx.fillText(sub, M, M+34);
-  ctx.textAlign='right'; ctx.font=`500 10px ${FONT}`;
-  ctx.fillText(new Date().toLocaleDateString('cs-CZ'), PW-M, M+18);
-  ctx.fillText(state.opts.view==='teacher'?'Pohled od tabule':'Pohled od žáků', PW-M, M+34);
-  ctx.textAlign='left';
-  ctx.strokeStyle=bw?'#000':'#E3E8EF'; ctx.lineWidth=bw?.6:1; ctx.beginPath(); ctx.moveTo(M,M+46); ctx.lineTo(PW-M,M+46); ctx.stroke();
+  ctx.textBaseline='alphabetic'; ctx.textAlign='left';
+  if(hasHead){
+    let x = M; const y = M+18;
+    if(m.className){ ctx.fillStyle=C.head; ctx.font=`700 22px ${FONT}`; ctx.fillText(m.className, x, y); x += ctx.measureText(m.className).width + 12; }
+    if(m.year){ ctx.fillStyle=C.mut; ctx.font=`500 13px ${FONT}`; ctx.fillText(m.year, x, y); }
+    if(m.note){ ctx.fillStyle=C.ink2; ctx.font=`500 11.5px ${FONT}`; ctx.fillText(m.note, M, y+19); }
+    const ly = M+HEAD-12;
+    ctx.strokeStyle=bw?'#000':'#E3E8EF'; ctx.lineWidth=bw?.6:1; ctx.beginPath(); ctx.moveTo(M,ly); ctx.lineTo(PW-M,ly); ctx.stroke();
+  }
   // plocha
   const aw=PW-2*M, ah=PH-2*M-HEAD-FOOT;
   const cp = Math.min(aw/bbW, ah/bbH, 30);
@@ -1019,10 +1342,7 @@ async function renderSheet(bw){
     rr(ctx,b.x,b.y,b.w,b.h,cp*.3); ctx.fillStyle=C.board; ctx.fill();
     if(bw){ ctx.lineWidth=1.2; ctx.strokeStyle=C.boardLine; ctx.stroke(); }
     else { ctx.fillStyle=C.accent; const k=cp*.12; if(vert) ctx.fillRect(flip?b.x+k:b.x+b.w-k*2, b.y+b.h*.1, k, b.h*.8); else ctx.fillRect(b.x+b.w*.1, flip?b.y+k:b.y+b.h-k*2, b.w*.8, k); }
-    ctx.save(); ctx.translate(b.x+b.w/2, b.y+b.h/2); if(vert) ctx.rotate(-Math.PI/2);
-    const fs = Math.min((vert?b.w:b.h)*.42, 13); ctx.font=`700 ${fs}px ${FONT}`; ctx.fillStyle=C.boardFg; ctx.textAlign='center'; ctx.textBaseline='middle';
-    if('letterSpacing' in ctx) ctx.letterSpacing = (fs*.35)+'px';
-    ctx.fillText('TABULE', fs*.17, 0); ctx.restore(); if('letterSpacing' in ctx) ctx.letterSpacing='0px'; }
+  }
   // lavice
   let eyeUsed=false;
   for(const d of state.desks){
@@ -1043,15 +1363,6 @@ async function renderSheet(bw){
       if(st.eye){ eyeUsed=true; const es = Math.min(s.w,s.h)*.24; drawEye(ctx, s.x+s.w-es*.85, s.y+es*.85, es, C.eye, C.eyeBg); }
     });
   }
-  // zápatí
-  const fy = PH-M-6; ctx.textBaseline='middle'; ctx.textAlign='left'; ctx.font=`500 9.5px ${FONT}`; ctx.fillStyle=C.mut;
-  let fx = M;
-  if(eyeUsed){ drawEye(ctx, fx+6, fy, 12, C.eye); ctx.fillText('žák se zrakovými obtížemi', fx+16, fy); fx += 16 + ctx.measureText('žák se zrakovými obtížemi').width + 18; }
-  const seats = state.desks.reduce((a,d)=>a+d.type,0), seated = state.students.filter(s=>seatOf(s.id)).length;
-  ctx.fillText(`Žáků: ${state.students.length}  ·  Usazeno: ${seated}  ·  Míst: ${seats}`, fx, fy);
-  ctx.textAlign='right'; ctx.fillStyle=bw?'#555':'#94A3B8'; ctx.font=`600 8.5px ${FONT}`;
-  if('letterSpacing' in ctx) ctx.letterSpacing='1px';
-  ctx.fillText('ŠESTAAPP · ZASEDAČKA', PW-M, fy); if('letterSpacing' in ctx) ctx.letterSpacing='0px';
   return {cv, PW, PH, orient};
 }
 
@@ -1115,7 +1426,7 @@ async function printSheet(){
 }
 
 /* ---------- theme ---------- */
-function setTheme(t){ document.documentElement.setAttribute('data-theme', t); try{ localStorage.setItem('zasedacka-theme', t); }catch(e){} setSeg('#segTheme', t); }
+function setTheme(t){ document.documentElement.setAttribute('data-theme', t); try{ localStorage.setItem('zasedacka-theme', t); }catch(e){} setSeg('#segTheme', t); if(state) renderAll(); }
 
 /* ---------- wiring ---------- */
 $$('.card-h').forEach(h=>h.addEventListener('click', ()=>h.parentElement.classList.toggle('closed')));
@@ -1126,25 +1437,31 @@ $('#segView').addEventListener('click', e=>{ const b=e.target.closest('button');
 $('#segPrintBw').addEventListener('click', e=>{ const b=e.target.closest('button'); if(b){ state.opts.printBw=b.dataset.v==='1'; commit(); } });
 $('#segMobile').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; document.body.classList.toggle('show-side', b.dataset.v==='side'); setSeg('#segMobile', b.dataset.v); if(b.dataset.v==='work') setTimeout(fitContent,30); });
 let metaT;
-for(const [id,k] of [['#fClass','className'],['#fYear','year'],['#fTeacher','teacher']]){
+for(const [id,k] of [['#fClass','className'],['#fYear','year'],['#fNote','note']]){
   $(id).addEventListener('input', e=>{ state.meta[k]=e.target.value; renderSide(); clearTimeout(metaT); metaT=setTimeout(()=>commit(),500); });
 }
 $('#bAdd').onclick = addStudents;
 $('#fImport').addEventListener('keydown', e=>{ if(e.key==='Enter' && (e.ctrlKey||e.metaKey)){ e.preventDefault(); addStudents(); } });
 $('#bSort').onclick = ()=>{ if(!state.students.length) return; state.students.sort((a,b)=>coll.compare(a.last,b.last)||coll.compare(a.first,b.first)); commit(); };
-$('#bClearSt').onclick = ()=>{ if(!state.students.length) return; modal({title:'Smazat všechny žáky?', body:`<p style="margin:0">Ze seznamu se odebere všech ${state.students.length} žáků a lavice se vyprázdní. Krok lze vrátit přes Zpět (Ctrl+Z).</p>`, ok:'Smazat žáky', danger:true, onOk:()=>{ state.students=[]; state.desks.forEach(d=>d.seats=d.seats.map(()=>null)); commit(); }}); };
-$$('.tab').forEach(t=>t.onclick=()=>{ mode=t.dataset.mode; sel=null; renderAll(); });
+$('#bClearSt').onclick = ()=>{ if(!state.students.length) return; modal({title:'Smazat všechny žáky?', body:`<p style="margin:0">Ze seznamu se odebere všech ${state.students.length} žáků a lavice se vyprázdní. Krok lze vrátit přes Zpět (Ctrl+Z).</p>`, ok:'Smazat žáky', danger:true, onOk:()=>{ state.students=[]; state.relations=[]; state.desks.forEach(d=>d.seats=d.seats.map(()=>null)); commit(); }}); };
+$$('.tab').forEach(t=>t.onclick=()=>{ mode=t.dataset.mode; sel=null; selRel=null; renderAll(); });
 $('#bAdd2').onclick = ()=>addDesk(2); $('#bAdd1').onclick = ()=>addDesk(1);
 $('#bQuick').onclick = quickLayout;
 $('#bRot').onclick = rotateSel; $('#bType').onclick = toggleType; $('#bDup').onclick = dupSel; $('#bDel').onclick = delSel;
+$('#rTypes').addEventListener('click', e=>{ const b=e.target.closest('.rtype'); if(!b) return; curRel=b.dataset.v;
+  const r = selRel && state.relations.find(x=>pairKey(x.a,x.b)===selRel);
+  if(r && r.t!==curRel){ r.t=curRel; commit(); } else renderToolbar(); });
+$('#bScatter').onclick = ()=>{ if(!state.students.length) return; scatter(); commit(); };
+$('#bDelRel').onclick = delRel;
+$('#bAll').onclick = ()=>autoSeat('random', true);
 $('#bRandom').onclick = ()=>autoSeat('random'); $('#bAlpha').onclick = ()=>autoSeat('alpha');
 $('#bEyeFirst').onclick = ()=>{ state.opts.eyeFirst=!state.opts.eyeFirst; commit(); toast(state.opts.eyeFirst?'Žáci se zrakovými obtížemi půjdou při rozsazení dopředu':'Rozsazení bez ohledu na zrak'); };
 $('#bEmpty').onclick = ()=>{ if(!state.desks.some(d=>d.seats.some(Boolean))) return; state.desks.forEach(d=>d.seats=d.seats.map(()=>null)); commit(); toast('Lavice vyprázdněny – Ctrl+Z vrátí'); };
 $('#bUndo').onclick = undo; $('#bRedo').onclick = redo;
 $('#bZi').onclick = ()=>setZoom(zoom+.1); $('#bZo').onclick = ()=>setZoom(zoom-.1); $('#bFit').onclick = fitContent;
 vp.addEventListener('wheel', e=>{ if(e.ctrlKey||e.metaKey){ e.preventDefault(); setZoom(zoom*(e.deltaY<0?1.08:1/1.08)); } }, {passive:false});
-$('#bNew').onclick = ()=>modal({title:'Nová třída', body:`<p style="margin:0">Vytvoří se nová třída s výchozím rozložením lavic. Neuložené změny se ztratí – nejdřív případně použijte <b>Uložit</b>.</p><label class="row" style="gap:8px;font-size:13px"><input type="checkbox" id="keepSt"> Ponechat seznam žáků (bez usazení)</label>`, ok:'Vytvořit novou', onOk:bg=>{
-  const keep = bg.querySelector('#keepSt').checked, st = state.students; state = defaultState(); if(keep) state.students = st; sel=null; commit({fit:true}); }});
+$('#bNew').onclick = ()=>modal({title:'Nová třída', body:`<p style="margin:0">Vytvoří se nová třída s výchozím rozložením lavic. Neuložené změny se ztratí – nejdřív případně použijte <b>Uložit</b>.</p><label class="row" style="gap:8px;font-size:13px"><input type="checkbox" id="keepSt"> Ponechat seznam žáků a jejich vztahy (bez usazení)</label>`, ok:'Vytvořit novou', onOk:bg=>{
+  const keep = bg.querySelector('#keepSt').checked, st = state.students, rl = state.relations; state = defaultState(); if(keep){ state.students = st; state.relations = rl; } sel=null; commit({fit:true}); }});
 $('#bOpen').onclick = ()=>$('#fileIn').click();
 $('#bSave').onclick = saveFile;
 $('#bPdf').onclick = $('#bPdf2').onclick = ()=>exportPdf(false);
@@ -1158,6 +1475,7 @@ document.addEventListener('keydown', e=>{
   if(typing) return;
   if((e.ctrlKey||e.metaKey) && k==='z'){ e.preventDefault(); e.shiftKey?redo():undo(); return; }
   if((e.ctrlKey||e.metaKey) && k==='y'){ e.preventDefault(); redo(); return; }
+  if(mode==='rel'){ if((k==='delete'||k==='backspace') && selRel){ e.preventDefault(); delRel(); } else if(k==='escape' && selRel){ selRel=null; drawEdges(); renderToolbar(); } return; }
   if(mode!=='desks') return;
   if(k==='delete'||k==='backspace'){ e.preventDefault(); delSel(); }
   else if(k==='r') rotateSel(); else if(k==='d') dupSel(); else if(k==='t') toggleType();
